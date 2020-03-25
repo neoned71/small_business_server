@@ -1,0 +1,31 @@
+$value_Q_type=handle_escaping($dbc,$_POST['value_Q_type']);
+
+if($value_Q_type==1)
+{
+	$file=$_FILES['value_Q'];
+	$value_Q_name=@file_save($file,$path);
+	if(!$value_Q_name)
+	{
+		
+		exit_function();
+	}
+	else
+	{
+		// $value_Q=sprintf($image_temQlate,$value_Q_name);
+		
+		$value_Q=new stdClass;
+		$value_Q->type="image";
+		$value_Q->value="../question_images/".$value_Q_name;
+		$values->Q=$value_Q;
+	}
+}
+else
+{
+	$value_Q=new stdClass;
+	$value_Q->type='text';
+	$value_Q->value=addslashes(handle_escaping($dbc,$_POST['value_Q']));
+	$values->Q=$value_Q;
+}
+
+
+
