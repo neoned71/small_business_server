@@ -18,6 +18,9 @@ function get_all_employees($dbc)
 	}
 	else
 	{
+		if (STAGING) {
+			echo mysqli_error($dbc);
+		}
 		return false;
 	}
 	return json_encode($ret);
@@ -35,6 +38,9 @@ function receive_android_token($dbc,$token)
 	}
 	else
 	{
+		if (STAGING) {
+			echo mysqli_error($dbc);
+		}
 		return false;
 	}
 }
@@ -56,11 +62,33 @@ function create_employee($dbc,$name,$email,$id_type,$id_photo,$id_number, $post,
 	}
 	else
 	{
-		echo mysqli_error($dbc);
+		if (STAGING) {
+			echo mysqli_error($dbc);
+		}
 	}
 	return $id;
 
 
+}
+
+function set_employee_stock($dbc,$employee_id,$product_id,$quantity)
+{
+	$sql="INSERT INTO `employee_stock_table`( `employee_id`, `product_id`, `quantity`)
+	 VALUES ('".$employee_id."', '".$product_id."',".$quantity.") on duplicate key update quantity=".$quantity;
+	$id=false;
+	// echo $sql;
+	if($res=mysqli_query($dbc,$sql))
+	{
+		return true;
+	}
+	else
+	{
+		if (STAGING) {
+			echo mysqli_error($dbc);
+		}
+		return false;
+	}
+	return $id;
 }
 
 function get_employee($dbc,$employee_id){
@@ -90,29 +118,24 @@ function get_employee($dbc,$employee_id){
 			}
 			else
 			{
-				show_error("ge:1");
+				
 				return false;
 			}				
 		}
 		else
 		{
 			// show_error("ge:2");
-			show_error(mysqli_error($dbc));
+			//show_error(mysqli_error($dbc));
+
+			if (STAGING) 
+			{
+				echo mysqli_error($dbc);
+			}
 			return false;
 		}
 		return json_encode($data);
 }
 
-// function edit_employee($dbc,$name,$address,$gst_number_of_shop,$phone,$email,$name_of_contact,$pincode,$employee_adding_the_shop_id,$location_id=0,$gst_number="-")
-// {
-// 	$sql="UPDATE `employee_table` SET `name` = '".$name."', `address` = '".$address."', `gst_number` = '".$gst_number."', `phone` = '".$phone."', `email` = '".$email."', `name_of_contact` = '".$name_of_contact."', `location_id` = '".$location_id."', `pincode` = '".$pincode."' WHERE `shop_table`.`id` =".$shop_id;
-// 	$id=false;
-// 	if($res=mysqli_query($dbc,$sql))
-// 	{
-// 		$id=mysqli_insert_id($dbc);
-// 	}
-// 	return $id;
-// }
 function disable_employee($dbc,$employee_id)
 {
 	$sql="UPDATE `employee_table` SET `active` = 0 WHERE `employee_table`.`id` =".$employee_id;
@@ -120,6 +143,12 @@ function disable_employee($dbc,$employee_id)
 	if($res=mysqli_query($dbc,$sql))
 	{
 		return true;
+	}
+	else
+	{
+		if (STAGING) {
+			echo mysqli_error($dbc);
+		}
 	}
 	return $id;
 }
@@ -132,6 +161,12 @@ function enable_employee($dbc,$employee_id)
 	{
 		return true;
 	}
+	else
+	{
+		if (STAGING) {
+			echo mysqli_error($dbc);
+		}
+	}
 	return $id;
 }
 
@@ -143,7 +178,36 @@ function set_location_to_employee($dbc,$employee_id,$location_id)
 	{
 		return true;
 	}
+	else
+	{
+		if (STAGING) {
+			echo mysqli_error($dbc);
+		}
+	}
 	return false;
+}
+
+
+function get_pincodes_array($dbc,$employee_id,$candidate_type)
+{
+	$sql="select distinct pincode from pincodes WHERE taluk in (select region_name from region_candidate_table where candidate_id=".$employee_id." and candidate_type=".$candidate_type.") ";
+	$ret=array();
+	if($res=mysqli_query($dbc,$sql))
+	{
+		while($row=mysqli_fetch_assoc($res))
+		{
+			
+			array_push($ret, $row['pincode']);
+		}
+	}
+	else
+	{
+		if (STAGING) {
+			echo mysqli_error($dbc);
+		}
+		return false;
+	}
+	return json_encode($ret);
 }
 
 

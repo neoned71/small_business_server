@@ -1,8 +1,11 @@
 <?php
-include("mysql.php");
-include("helping_functions.php");
 
+include("initialization.php");
 
-echo insert_enquiry($dbc,1);
+// get_pincodes_array($dbc,$employee_id,$candidate_type)
+
+$employee_id=2;
+$candidate_type=2;
+echo get_pincodes_array($dbc,$employee_id,$candidate_type)
 
 ?>
