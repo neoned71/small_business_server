@@ -4,7 +4,7 @@ include("distributor_functions.php");
 // include("location_functions.php");
 include("region_functions.php");
 include("employee_functions.php");
-// include("order_functions.php");
+include("order_functions.php");
 include("shop_functions.php");
 include("product_functions.php");
 include("authentication_functions.php");

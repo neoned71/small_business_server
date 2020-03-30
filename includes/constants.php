@@ -1,9 +1,11 @@
 <?php
 
 define("STAGING",1);
-
+define("TAX_PERCENTAGE",18.5);
+define("DISTRIBUTOR_USER_TYPE",10);
+define("MR_USER_TYPE",2);
+define("ADMIN_USER_TYPE",1);
 // $link="https://gravityclasses.in/office";
-
 // $home="https://gravityclasses.in";
 
 // //images

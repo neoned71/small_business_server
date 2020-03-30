@@ -1,20 +1,7 @@
 <?php
 include("header.php");
-
-//name variant photo unit_size
-
+$permission=1;
 include("self_check.php");
-
-
-if(!empty($_POST['product_pic_base64']))
-{
-	$product_pic_name="product_".$time_hash.".png";
-	image_base64_save($_POST["product_pic_base64"],$product_pic_name,$product_image_path,"png");
-}
-else
-{
-	$shop_pic_name="blank.png";
-}
 
 if(!empty($_POST['name']))
 {
@@ -46,6 +33,16 @@ else
 	return_error($dbc,$result);
 }
 
+if( !empty($_POST['product_id']))
+{
+	$product_id=handle_escaping($dbc,$_POST["product_id"]);
+}
+else
+{
+	$result->message="product id not found";
+	return_error($dbc,$result);
+}
+
 if( !empty($_POST['price']))
 {
 	$price=handle_escaping($dbc,$_POST["price"]);
@@ -57,14 +54,16 @@ else
 }
 
 
-$product_id=create_product($dbc,$name,$variant,$product_pic_name,$unit_size,$employee_id,$price);
-if(empty($product_id))
+
+
+if(!update_product($dbc,$product_id,$name,$variant,$unit_size,$price))
 {
 
-	$result->message="creating product failed";
+	$result->message="updating product failed";
+	
 	return_error($dbc,$result);
 	
 }
-return_successful($dbc,$result,"Done creating product");
+return_successful($dbc,$result,"Done updating product");
 ?>
 

@@ -13,7 +13,7 @@ function get_order($dbc,$order_id)
 		{
 			$data=new stdClass();
 			$id=$row['id'];
-			$data->shop=json_decode(get_shop($dbc,$row['shop_id']);		
+			$data->shop=json_decode(get_shop($dbc,$row['shop_id']));		
 			$data->billed=$row['taxed'];
 			$data->amount=$row['amount'];
 			$data->status=$row['status'];
@@ -52,6 +52,11 @@ function get_order_items($dbc,$order_id,$shop)
 		
 		
 	}
+	else{
+		if (STAGING) {
+			echo mysqli_error($dbc);
+		}
+	}
 	return false;
 }
 
@@ -71,7 +76,7 @@ function get_order_item($dbc,$order_item_id,$shop)
 			$data=new stdClass();
 			
 			$id=$row['id'];
-			$data->product=json_decode(get_product($dbc,$row['product_id']);	
+			$data->product=json_decode(get_product($dbc,$row['product_id']));	
 			
 			$data->quantity=$row['quantity'];
 			$data->billed=$row['taxed'];
@@ -116,7 +121,44 @@ function create_order($dbc,$shop_id,$taxed,$employee_id)
 	}
 	else
 	{
-		echo mysqli_error($dbc);
+		if (STAGING) {
+			echo mysqli_error($dbc);
+		}
+	}
+	return $id;
+}
+
+
+function create_order_item($dbc,$order_id,$product_id,$quantity,$discount,$serviced_by,$taxed)
+{
+	$product=json_decode(get_product($dbc,$product_id));
+	if(empty($product) or $product->active==0)
+	{
+		if (STAGING) {
+			echo "empty product";
+		}
+		return false;
+	}
+	$amount=$product->price;
+	$tax=0;
+	if($taxed==1)
+	{
+		$tax=$amount*TAX_PERCENTAGE*0.01;
+		// echo $tax;
+	}
+// order_id product_id quantity discount(percentage:0) serviced_by(us(id:0) or a distributor(id:n)) tax(default:0) 
+	$sql="INSERT INTO `order_item_table`(`amount`,`order_id`, `product_id`, `quantity`,`discount`, `serviced_by`, `tax`) VALUES (".$amount.",".$order_id.",".$product_id.",".$quantity.",".$discount.",".$serviced_by.",".$tax.")";
+	// echo $sql;
+	$id=false;
+	if($res=mysqli_query($dbc,$sql))
+	{
+		$id=mysqli_insert_id($dbc);
+	}
+	else
+	{
+		if (STAGING) {
+			echo mysqli_error($dbc);
+		}
 	}
 	return $id;
 }
@@ -134,7 +176,9 @@ function edit_order_item_qty($dbc,$quantity)
 	}
 	else
 	{
-		echo mysqli_error($dbc);
+		if (STAGING) {
+			echo mysqli_error($dbc);
+		}
 	}
 	return $id;
 
@@ -152,7 +196,9 @@ function cancel_order_item($dbc,$employee_id)
 	}
 	else
 	{
-		echo mysqli_error($dbc);
+		if (STAGING) {
+			echo mysqli_error($dbc);
+		}
 	}
 	return $id;
 
@@ -179,7 +225,9 @@ function get_orders_unbilled($dbc)
 	}
 	else
 	{
-		// echo mysqli_error($dbc);
+		if (STAGING) {
+			echo mysqli_error($dbc);
+		}
 		return false;
 	}
 }
@@ -204,7 +252,9 @@ function get_orders_billed($dbc)
 	}
 	else
 	{
-		// echo mysqli_error($dbc);
+		if (STAGING) {
+			echo mysqli_error($dbc);
+		}
 		return false;
 	}
 }
@@ -227,7 +277,9 @@ function get_orders_shop($dbc,$shop_id)
 	}
 	else
 	{
-		// echo mysqli_error($dbc);
+		if (STAGING) {
+			echo mysqli_error($dbc);
+		}
 		return false;
 	}
 }

@@ -50,10 +50,10 @@ function receive_android_token($dbc,$token)
 
 
 
-function create_employee($dbc,$name,$email,$id_type,$id_photo,$id_number, $post, $address, $phone,$mother_name,$father_name)
+function create_employee($dbc,$name,$email,$id_type,$id_photo,$id_number, $type, $address, $phone,$mother_name,$father_name)
 {
-	$sql="INSERT INTO `employee_table`( `name`, `email`, `post`, `address`, `phone`,`id_type`,`id_photo`,`id_number`,`father_name`,`mother_name`)
-	 VALUES ('".$name."', '".$email."',".$post.", '".$address."', '".$phone."', '".$id_type."', '".$id_photo."', '".$id_number."', '".$father_name."', '".$mother_name."')";
+	$sql="INSERT INTO `employee_table`( `name`, `email`, `type`, `address`, `phone`,`id_type`,`id_photo`,`id_number`,`father_name`,`mother_name`)
+	 VALUES ('".$name."', '".$email."',".$type.", '".$address."', '".$phone."', '".$id_type."', '".$id_photo."', '".$id_number."', '".$father_name."', '".$mother_name."')";
 	$id=false;
 	// echo $sql;
 	if($res=mysqli_query($dbc,$sql))
@@ -69,6 +69,23 @@ function create_employee($dbc,$name,$email,$id_type,$id_photo,$id_number, $post,
 	return $id;
 
 
+}
+
+function update_employee($dbc,$employee_id,$name,$email,$address, $phone)
+{
+	$sql="UPDATE `employee_table` SET `name` = '".$name."', `email` = '".$email."', `address` = '".$address."',`phone` = '".$phone."' WHERE `employee_table`.`id` =".$employee_id;
+	$id=false;
+	if($res=mysqli_query($dbc,$sql))
+	{
+		return true;
+	}
+	else
+	{
+		if (STAGING) {
+			echo mysqli_error($dbc);
+		}
+	}
+	return $id;
 }
 
 function set_employee_stock($dbc,$employee_id,$product_id,$quantity)
@@ -105,7 +122,7 @@ function get_employee($dbc,$employee_id){
 			{
 				$data->name=$row['name'];
 				$data->email=$row['email'];
-				$data->post=$row['post'];
+				$data->type=$row['type'];
 				$data->phone=$row['phone'];
 				$data->address=$row['address'];
 				$data->datetime=$row['datetime'];

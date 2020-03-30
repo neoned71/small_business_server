@@ -2,12 +2,7 @@
 include("header.php");
 //check if the person is capable to perform this task
 
-
-if(!check_credentials($_POST['self']))
-{
-	$result->message="name not found";
-	return_error($dbc,$result);
-}
+include("self_check.php");
 
 if(!empty($_POST['face_pic_base64']))
 {

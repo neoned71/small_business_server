@@ -18,6 +18,8 @@ start_db_transaction($dbc);
 $rand=rand();
 $time_hash=hash('sha256',$rand."_".time());
 $result=new stdClass;
+
+
 //check if the person is capable to perform this task
 
 

@@ -5,11 +5,7 @@ $root="..";
 include($root."/initialization.php");
 $permission=1;
 // for being logged in
-if(!check_credentials($_POST['self']))
-{
-	$result->message="name not found";
-	return_error($dbc,$result);
-}
+include("self_check.php");
 
 
 $dp_path=$root."/images/pictures_display";
@@ -26,10 +22,6 @@ $time_hash=hash('sha256',$rand."_".time());
 start_db_transaction($dbc);
 
 
-
-$failed=true;
-
-
 //code of this file starts
 
 // if(empty(create_login_item($dbc,$employee_id))){
@@ -40,9 +32,7 @@ $failed=true;
 
 //code of this file ends
 
-if(!$failed)
-{
 	return_successful($dbc,$result,"template executed successfully");
-}
+
 
 ?>

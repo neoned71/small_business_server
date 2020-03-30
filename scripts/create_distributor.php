@@ -1,17 +1,8 @@
 <?php
 include("header.php");
 $permission=1;
-if(!check_credentials($_POST['self']))
-{
-	$result->message="name not found";
-	return_error($dbc,$result);
-}
-else
-{
-	//this has to change
-	$employee_id=handle_escaping($dbc, $_POST['self']);
-	$employee=json_decode(get_employee($dbc,$employee_id));
-}
+include("self_check.php");
+
 
 if(!empty($_POST['name']))
 {

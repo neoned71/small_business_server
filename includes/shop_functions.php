@@ -18,9 +18,9 @@ function create_shop($dbc,$name,$shop_pic,$address,$phone,$email,$name_of_contac
 	return $id;
 }
 
-function update_shop($dbc,$name,$shop_pic,$address,$gst_number_of_shop,$phone,$email,$name_of_contact,$pincode,$employee_adding_the_shop_id,$gst_number="-")
+function update_shop($dbc,$shop_id,$name,$address,$phone,$email,$name_of_contact,$gst_number)
 {
-	$sql="UPDATE `shop_table` SET `name` = '".$name."',`shop_pic`='".$shop_pic."', `address` = '".$address."', `gst_number` = '".$gst_number."', `phone` = '".$phone."', `email` = '".$email."', `name_of_contact` = '".$name_of_contact."', `pincode` = '".$pincode."' WHERE `shop_table`.`id` =".$shop_id;
+	$sql="UPDATE `shop_table` SET `name` = '".$name."', `address` = '".$address."', `gst_number` = '".$gst_number."', `email` = '".$email."', `name_of_contact` = '".$name_of_contact."', `pincode` = '".$pincode."' WHERE `shop_table`.`id` =".$shop_id;
 	$id=false;
 	if($res=mysqli_query($dbc,$sql))
 	{
