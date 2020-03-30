@@ -35,6 +35,28 @@ function update_shop($dbc,$shop_id,$name,$address,$phone,$email,$name_of_contact
 	return false;
 }
 
+function update_shop_pic($dbc,$shop_id,$temp_image_name)
+{
+	$new_name="shop_".$temp_image_name;
+	if(rename($temp_image_path."/".$temp_image_name, $shop_image_path."/".$new_name)){
+
+		$sql="UPDATE `shop_table` SET `shop_pic` = '".$new_name."' WHERE `id` =".$shop_id;
+		$id=false;
+		if($res=mysqli_query($dbc,$sql))
+		{
+			return true;
+		}
+		else
+		{
+			if (STAGING) {
+				echo mysqli_error($dbc);
+			}
+		}
+	}
+	
+	return $id;
+}
+
 
 function get_shops($dbc){
 		$data= new stdClass();

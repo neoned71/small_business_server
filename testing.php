@@ -31,6 +31,7 @@ $dis=json_decode(get_distributors_for_shop_product($dbc,1,3));
 var_dump($dis);
 mysqli_close($dbc);
 
+
 // echo json_encode(check_distributor_for_shop_product($dbc,1,1,3));
 
 

@@ -6,6 +6,7 @@ include($root."/initialization.php");
 $dp_path=$root."/images/pictures_display";
 $id_path=$root."/images/pictures_id";
 $shop_image_path=$root."/images/shops";
+$temp_image_path=$root."/images/temp";
 $product_image_path=$root."/images/products";
 
 if(STAGING)

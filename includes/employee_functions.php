@@ -1,7 +1,6 @@
 <?php
 function get_all_employees($dbc)
 {
-	
 	$sql="select id from employee_table";
 	$ret=array();
 	if($res=mysqli_query($dbc,$sql))
@@ -85,6 +84,28 @@ function update_employee($dbc,$employee_id,$name,$email,$address, $phone)
 			echo mysqli_error($dbc);
 		}
 	}
+	return $id;
+}
+
+function update_employee_pic($dbc,$employee_id,$temp_image_name)
+{
+	$new_name="face_".$temp_image_name;
+	if(rename($temp_image_path."/".$temp_image_name, $dp_path."/".$new_name)){
+
+		$sql="UPDATE `employee_table` SET `display_pic` = '".$new_name."' WHERE `employee_table`.`id` =".$employee_id;
+		$id=false;
+		if($res=mysqli_query($dbc,$sql))
+		{
+			return true;
+		}
+		else
+		{
+			if (STAGING) {
+				echo mysqli_error($dbc);
+			}
+		}
+	}
+	
 	return $id;
 }
 
