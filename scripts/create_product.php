@@ -9,7 +9,7 @@ include("self_check.php");
 if(!empty($_POST['product_pic_base64']))
 {
 	$product_pic_name="product_".$time_hash.".png";
-	image_base64_save($_POST["product_pic_base64"],$product_pic_name,$product_image_path,"png");
+	image_base64_save($_POST["product_pic_base64"],$product_pic_name,PRODUCT_IMAGE_PATH,"png");
 }
 else
 {

@@ -8,7 +8,7 @@ if(!empty($_POST['face_pic_base64']))
 {
 	$face_pic_name="face_".$time_hash.".png";
 	// echo $face_name;
-	image_base64_save($_POST["face_pic_base64"],$face_pic_name,$dp_path,"png");
+	image_base64_save($_POST["face_pic_base64"],$face_pic_name,DP_PATH,"png");
 }
 else
 {
@@ -30,7 +30,7 @@ if(!empty($_POST['id_pic_base64']))
 {
 	
 	$id_pic_name="id_temp_".$time_hash.".png";
-	image_base64_save($_POST["id_pic_base64"],$id_pic_name,$id_path,"png");
+	image_base64_save($_POST["id_pic_base64"],$id_pic_name,ID_IMAGE_PATH,"png");
 }
 else
 {

@@ -5,7 +5,7 @@ include("self_check.php");
 if(!empty($_POST['shop_pic_base64']))
 {
 	$shop_pic_name="shop_".$time_hash.".png";
-	image_base64_save($_POST["shop_pic_base64"],$shop_pic_name,$shop_image_path,"png");
+	image_base64_save($_POST["shop_pic_base64"],$shop_pic_name,SHOP_IMAGE_PATH,"png");
 }
 else
 {

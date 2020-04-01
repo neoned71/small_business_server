@@ -6,7 +6,7 @@ include("self_check.php");
 if(!empty($_POST['pic_base64']))
 {
 	$temp_pic_name=$time_hash.".png";
-	image_base64_save($_POST["shop_pic_base64"],$temp_pic_name,$temp_image_path,"png");
+	image_base64_save($_POST["pic_base64"],$temp_pic_name,TEMP_IMAGE_PATH,"png");
 }
 else
 {
@@ -26,31 +26,52 @@ else
 }
 
 
-if( !empty($_POST['destination']))
+if(!empty($_POST['destination']))
 {
 	$destination=handle_escaping($dbc,$_POST["destination"]);
 	switch ($destination) {
 		case 'employee':
-			$update_function=function($dbc,$id,$a){
-				return update_employee_pic($dbc,$id,$a);
+			if(!update_employee_pic($dbc,$id,$temp_pic_name))
+			{
+
+				$result->message="updating employee pic failed";
+				return_error($dbc,$result);
+				
 			}
+			// $update_function=function($dbc,$id,$a){
+			// 	 return update_employee_pic($dbc,$id,$a);
+			// }
 			break;
 		case 'product':
-			$update_function=function($dbc,$id,$a){
-				return update_product_pic($dbc,$id,$a);
+		if(!update_product_pic($dbc,$id,$temp_pic_name))
+			{
+
+				$result->message="updating product pic failed";
+				return_error($dbc,$result);
+				
 			}
+		// 	$update_function=function($dbc,$id,$a){
+		// 		return update_product_pic($dbc,$id);
+		// 	}
 			break;
 		case 'shop':
-			$update_function=function($dbc,$id,$a){
-				return update_shop_pic($dbc,$id,$a);
+		if(!update_shop_pic($dbc,$id,$temp_pic_name))
+			{
+
+				$result->message="updating shop pic failed";
+				return_error($dbc,$result);
+				
 			}
+		// 	$update_function=function($dbc,$id,$a){
+		// 		return update_shop_pic($dbc,$id,$a);
+		// 	}
 			break;
 		
-		default:
-			$update_function=function($dbc,$id,$a){
-				return false;
-			}
-			break;
+		// default:
+		// 	$update_function=function($dbc,$id,$a){
+		// 		return false;
+		// 	}
+		// 	break;
 	}
 }
 else
@@ -59,6 +80,9 @@ else
 	return_error($dbc,$result);
 }
 
+
+/*
+//if(update_employee($dbc,$temp_pic_name))
 if(!update_function($dbc,$temp_pic_name))
 {
 
@@ -66,5 +90,6 @@ if(!update_function($dbc,$temp_pic_name))
 	return_error($dbc,$result);
 	
 }
-return_successful($dbc,$result,"Done updating shop");
+*/
+return_successful($dbc,$result,"Done updating image");
 ?>

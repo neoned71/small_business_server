@@ -37,8 +37,10 @@ function update_shop($dbc,$shop_id,$name,$address,$phone,$email,$name_of_contact
 
 function update_shop_pic($dbc,$shop_id,$temp_image_name)
 {
+	
+
 	$new_name="shop_".$temp_image_name;
-	if(rename($temp_image_path."/".$temp_image_name, $shop_image_path."/".$new_name)){
+	if(rename(TEMP_IMAGE_PATH."/".$temp_image_name, SHOP_IMAGE_PATH."/".$new_name)){
 
 		$sql="UPDATE `shop_table` SET `shop_pic` = '".$new_name."' WHERE `id` =".$shop_id;
 		$id=false;
@@ -61,6 +63,7 @@ function update_shop_pic($dbc,$shop_id,$temp_image_name)
 function get_shops($dbc){
 		$data= new stdClass();
 		$ret=array();
+		$sql="select * from shop_table";
 		if($res=mysqli_query($dbc,$sql))
 		{
 			while($row=mysqli_fetch_assoc($res)){

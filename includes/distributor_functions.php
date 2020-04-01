@@ -1,5 +1,5 @@
 <?php
-function get_all_distributors($dbc)
+function get_distributors($dbc)
 {
 	
 	$sql="select id from distributor_table";

@@ -1,5 +1,5 @@
 <?php
-function get_all_employees($dbc)
+function get_employees($dbc)
 {
 	$sql="select id from employee_table";
 	$ret=array();
@@ -89,8 +89,10 @@ function update_employee($dbc,$employee_id,$name,$email,$address, $phone)
 
 function update_employee_pic($dbc,$employee_id,$temp_image_name)
 {
+	
+
 	$new_name="face_".$temp_image_name;
-	if(rename($temp_image_path."/".$temp_image_name, $dp_path."/".$new_name)){
+	if(rename(TEMP_IMAGE_PATH."/".$temp_image_name, DP_PATH."/".$new_name)){
 
 		$sql="UPDATE `employee_table` SET `display_pic` = '".$new_name."' WHERE `employee_table`.`id` =".$employee_id;
 		$id=false;
@@ -132,6 +134,7 @@ function set_employee_stock($dbc,$employee_id,$product_id,$quantity)
 function get_employee($dbc,$employee_id){
 		$temp=false;
 		$id=$employee_id;
+
 
 		$data= new stdClass;
 		$sql="select * from employee_table where id=".$id;

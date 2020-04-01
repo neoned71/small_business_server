@@ -1,13 +1,20 @@
 <?php
-$root="..";
+define("ROOT","..");
 // include($root."/initialization.php");
-include($root."/initialization.php");
+include(ROOT."/initialization.php");
 
-$dp_path=$root."/images/pictures_display";
-$id_path=$root."/images/pictures_id";
-$shop_image_path=$root."/images/shops";
-$temp_image_path=$root."/images/temp";
-$product_image_path=$root."/images/products";
+
+define("DP_PATH",ROOT."/images/pictures_display");
+define("ID_IMAGE_PATH",ROOT."/images/pictures_id");
+define("SHOP_IMAGE_PATH",ROOT."/images/shops");
+define("TEMP_IMAGE_PATH",ROOT."/images/temp");
+define("PRODUCT_IMAGE_PATH",ROOT."/images/products");
+
+// $dp_path=$root."/images/pictures_display";
+// $id_path=$root."/images/pictures_id";
+// $shop_image_path=$root."/images/shops";
+// $temp_image_path=$root."/images/temp";
+// $product_image_path=$root."/images/products";
 
 if(STAGING)
 {

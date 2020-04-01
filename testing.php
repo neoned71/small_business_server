@@ -1,8 +1,7 @@
 <?php
-
 include("initialization.php");
-
 // get_pincodes_array($dbc,$employee_id,$candidate_type)
+
 
 $employee_id=2;
 // $candidate_type=2;
@@ -26,6 +25,16 @@ $first_ord->tax=10;
 // array_push($order_obj->orders_array, $first_ord);
 
 // echo json_encode($order_obj);
+
+$dis=json_decode(get_products($dbc));
+var_dump($dis);
+
+$dis=json_decode(get_distributors_for_shop_product($dbc,1,3));
+var_dump($dis);
+
+
+$dis=json_decode(get_distributors_for_shop_product($dbc,1,3));
+var_dump($dis);
 
 $dis=json_decode(get_distributors_for_shop_product($dbc,1,3));
 var_dump($dis);
