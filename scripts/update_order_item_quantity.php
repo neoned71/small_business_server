@@ -27,7 +27,7 @@ else
 if(!update_order_item_quantity($dbc,$order_item_id,$quantity))
 {
 
-	$result->message="updating shop failed";
+	$result->message="updating order item quantity failed";
 	return_error($dbc,$result);
 	
 }

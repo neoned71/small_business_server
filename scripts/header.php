@@ -10,6 +10,10 @@ define("SHOP_IMAGE_PATH",ROOT."/images/shops");
 define("TEMP_IMAGE_PATH",ROOT."/images/temp");
 define("PRODUCT_IMAGE_PATH",ROOT."/images/products");
 
+define("BLANK_SHOP_IMAGE_NAME","blank.png");
+define("BLANK_PRODUCT_IMAGE_NAME","blank.png");
+define("BLANK_EMPLOYEE_IMAGE_NAME","profile.png");
+
 // $dp_path=$root."/images/pictures_display";
 // $id_path=$root."/images/pictures_id";
 // $shop_image_path=$root."/images/shops";

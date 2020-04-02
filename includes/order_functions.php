@@ -3,12 +3,9 @@ function get_order($dbc,$order_id)
 {
 	$sql="select * from order_table where id=".$order_id;
 	$id=false;
-	
 	$ret=array();
-
 	if($res=mysqli_query($dbc,$sql))
 	{
-
 		if($row=mysqli_fetch_assoc($res))
 		{
 			$data=new stdClass();
@@ -22,12 +19,7 @@ function get_order($dbc,$order_id)
 			$data->total_amount=$data->amount + $data->tax_amount;
 			$data->orders=json_decode(get_order_items($dbc,$order_id,$data->shop));
 		}
-
-
-		
-		return json_encode($data);
-		
-		
+		return json_encode($data);	
 	}
 	return false;
 }
@@ -163,16 +155,17 @@ function create_order_item($dbc,$order_id,$product_id,$quantity,$discount,$servi
 	return $id;
 }
 
-
 //finish this one later
-function edit_order_item_qty($dbc,$quantity)
+function update_order_item_quantity($dbc,$order_item_id,$quantity)
 {
 
-	$sql="update `order_item_table` set `quantity`=".$quantity;
+	$sql="update `order_item_table` set `quantity`=".$quantity." where id=".$order_item_id;
+	// echo $sql;
 	$id=false;
 	if($res=mysqli_query($dbc,$sql))
 	{
-		$id=mysqli_insert_id($dbc);
+
+		return true;
 	}
 	else
 	{
@@ -180,19 +173,21 @@ function edit_order_item_qty($dbc,$quantity)
 			echo mysqli_error($dbc);
 		}
 	}
-	return $id;
+	// return $id;
 
 }
 
 
-function cancel_order_item($dbc,$employee_id)
-{
 
-	$sql="update `order_item_table` set `is_cancelled`=1, `cancelled_by`=".$employee_id.", `cancelled_time`=now()";
+function cancel_order_item($dbc,$order_item_id,$employee_id)
+{
+	$sql="update `order_item_table` set `is_cancelled`=1, cancelled_by=".$employee_id.", cancelled_time=now() where id=".$order_item_id;
+	// echo $sql;
 	$id=false;
 	if($res=mysqli_query($dbc,$sql))
 	{
-		$id=mysqli_insert_id($dbc);
+
+		return true;
 	}
 	else
 	{
@@ -200,8 +195,26 @@ function cancel_order_item($dbc,$employee_id)
 			echo mysqli_error($dbc);
 		}
 	}
-	return $id;
+}
 
+
+
+function cancel_order($dbc,$order_id,$employee_id)
+{
+	$sql="update `order_item_table` set `is_cancelled`=1, cancelled_by=".$employee_id.", cancelled_time=now() where order_id=".$order_id." and is_cancelled=0";
+	// echo $sql;
+	$id=false;
+	if($res=mysqli_query($dbc,$sql))
+	{
+
+		return true;
+	}
+	else
+	{
+		if (STAGING) {
+			echo mysqli_error($dbc);
+		}
+	}
 }
 
 

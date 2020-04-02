@@ -61,6 +61,26 @@ function update_product_pic($dbc,$product_id,$temp_image_name)
 	return $id;
 }
 
+function remove_product_pic($dbc,$product_id)
+{
+	$new_name=BLANK_PRODUCT_IMAGE_NAME;
+	$sql="UPDATE `shop_table` SET `product_pic` = '".$new_name."' WHERE `id`=".$product_id;
+	$id=false;
+	if($res=mysqli_query($dbc,$sql))
+	{
+		return true;
+	}
+	else
+	{
+		if (STAGING) {
+			echo mysqli_error($dbc);
+		}
+	}
+	
+	
+	return $id;
+}
+
 
 function get_products($dbc)
 {

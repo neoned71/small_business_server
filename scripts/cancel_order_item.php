@@ -16,7 +16,7 @@ else
 	return_error($dbc,$result);
 }
 
-if(!cancel_order($dbc,$order_item_id,$cancelled_by))
+if(!cancel_order_item($dbc,$order_item_id,$cancelled_by))
 {
 
 	$result->message="cancelling order failed";

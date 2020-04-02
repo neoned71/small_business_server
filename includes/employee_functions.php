@@ -111,6 +111,26 @@ function update_employee_pic($dbc,$employee_id,$temp_image_name)
 	return $id;
 }
 
+function remove_employee_pic($dbc,$employee_id)
+{
+	$new_name=BLANK_EMPLOYEE_IMAGE_NAME;
+	$sql="UPDATE `shop_table` SET `display_pic` = '".$new_name."' WHERE `id` =".$employee_id;
+	$id=false;
+	if($res=mysqli_query($dbc,$sql))
+	{
+		return true;
+	}
+	else
+	{
+		if (STAGING) {
+			echo mysqli_error($dbc);
+		}
+	}
+	
+	
+	return $id;
+}
+
 function set_employee_stock($dbc,$employee_id,$product_id,$quantity)
 {
 	$sql="INSERT INTO `employee_stock_table`( `employee_id`, `product_id`, `quantity`)
